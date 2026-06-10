@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Booking Agent — Zero-Lag Response Agents for Local Service Businesses</title>
+    <meta name="description" content="AI Booking Agent installs AI response agents that engage, qualify, and book leads under 60 seconds — 24/7. For HVAC, law, dental, solar, real estate & roofing.">
+    <style>
+        /* ── Reset & Base ── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: #1a1a2e;
+            line-height: 1.6;
+            background: #f8fafc;
+        }
+        a { color: #1a237e; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        img { max-width: 100%; height: auto; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+        /* ── Typography ── */
+        h1 { font-size: 2.75rem; font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; }
+        h2 { font-size: 2rem; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; }
+        h3 { font-size: 1.25rem; font-weight: 600; line-height: 1.3; }
+        p { margin-bottom: 1rem; }
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+        }
+
+        /* ── Colors ── */
+        .brand-primary { color: #1a237e; }
+        .brand-accent { color: #00c853; }
+        .bg-primary { background: #1a237e; }
+        .bg-accent { background: #00c853; }
+        .bg-light { background: #f0f4ff; }
+        .bg-white { background: #ffffff; }
+        .text-white { color: #ffffff; }
+        .text-gray { color: #64748b; }
+
+        /* ── Header / Nav ── */
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #1a237e;
+        }
+        .logo span { color: #00c853; }
+        nav a {
+            margin-left: 28px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #475569;
+        }
+        nav a:hover { color: #1a237e; }
+        .btn-nav {
+            background: #1a237e;
+            color: #fff !important;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .btn-nav:hover { background: #0d1457; }
+
+        /* ── Hero ── */
+        .hero {
+            padding: 80px 0 64px;
+            text-align: center;
+            background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #3949ab 100%);
+            color: #fff;
+        }
+        .hero h1 {
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero p {
+            font-size: 1.15rem;
+            opacity: 0.9;
+            max-width: 640px;
+            margin: 0 auto 36px;
+            line-height: 1.7;
+        }
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 48px;
+            flex-wrap: wrap;
+        }
+        .hero-stat { text-align: center; }
+        .hero-stat .num { font-size: 2rem; font-weight: 800; color: #00c853; }
+        .hero-stat .label { font-size: 0.85rem; opacity: 0.8; margin-top: 4px; }
+
+        /* ── Buttons ── */
+        .btn {
+            display: inline-block;
+            padding: 14px 36px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: #00c853;
+            color: #1a237e;
+        }
+        .btn-primary:hover {
+            background: #00b34a;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(0, 200, 83, 0.3);
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            backdrop-filter: blur(4px);
+        }
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.25);
+        }
+        .btn-hero-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ── Sections ── */
+        section { padding: 72px 0; }
+        .section-title {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+        .section-title h2 { margin-bottom: 12px; }
+        .section-title p {
+            color: #64748b;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        /* ── Features Grid ── */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+        @media (max-width: 900px) {
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .features-grid { grid-template-columns: 1fr; }
+        }
+        .feature-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 32px 28px;
+            border: 1px solid #e2e8f0;
+            transition: box-shadow 0.2s;
+        }
+        .feature-card:hover {
+            box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+        }
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+        .feature-card h3 { margin-bottom: 10px; color: #1a237e; }
+        .feature-card p { font-size: 0.92rem; color: #64748b; margin: 0; }
+
+        /* ── How It Works ── */
+        .steps {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            counter-reset: step;
+        }
+        @media (max-width: 768px) {
+            .steps { flex-direction: column; }
+        }
+        .step {
+            background: #fff;
+            border-radius: 14px;
+            padding: 32px 28px;
+            border: 1px solid #e2e8f0;
+            flex: 1;
+            position: relative;
+            text-align: center;
+        }
+        .step-num {
+            width: 44px;
+            height: 44px;
+            background: #1a237e;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.15rem;
+            margin: 0 auto 16px;
+        }
+        .step h3 { margin-bottom: 8px; }
+        .step p { font-size: 0.9rem; color: #64748b; margin: 0; }
+
+        /* ── Pricing ── */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        @media (max-width: 700px) {
+            .pricing-grid { grid-template-columns: 1fr; }
+        }
+        .pricing-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 36px 32px;
+            border: 2px solid #e2e8f0;
+            text-align: center;
+        }
+        .pricing-card.featured {
+            border-color: #00c853;
+            box-shadow: 0 0 0 1px #00c853;
+        }
+        .pricing-card .plan-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+        .pricing-card .price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #1a237e;
+            margin-bottom: 4px;
+        }
+        .pricing-card .price span {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #64748b;
+        }
+        .pricing-card .price-sub {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 24px;
+        }
+        .pricing-card ul {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 28px;
+        }
+        .pricing-card li {
+            padding: 8px 0;
+            font-size: 0.92rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .pricing-card li::before {
+            content: "✅ ";
+            color: #00c853;
+        }
+        .pricing-card .btn {
+            width: 100%;
+        }
+
+        /* ── Testimonial ── */
+        .testimonial {
+            background: #fff;
+            border-radius: 16px;
+            padding: 40px 36px;
+            max-width: 640px;
+            margin: 0 auto;
+            border: 1px solid #e2e8f0;
+        }
+        .testimonial blockquote {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #334155;
+            margin-bottom: 20px;
+        }
+        .testimonial .author {
+            font-weight: 600;
+            color: #1a237e;
+        }
+        .testimonial .author span {
+            font-weight: 400;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* ── CTA ── */
+        .cta-section {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            color: #fff;
+            text-align: center;
+            padding: 72px 0;
+        }
+        .cta-section h2 { margin-bottom: 16px; }
+        .cta-section p {
+            opacity: 0.9;
+            max-width: 520px;
+            margin: 0 auto 32px;
+        }
+
+        /* ── Footer ── */
+        footer {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+        footer a { color: #cbd5e1; }
+    </style>
+</head>
+<body>
+
+    <!-- ════════════ HEADER ════════════ -->
+    <header>
+        <div class="container">
+            <div class="logo"><span>AI</span> Booking Agent</div>
+            <nav>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#contact" class="btn-nav">Book a Call</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ════════════ HERO ════════════ -->
+    <section class="hero">
+        <div class="container">
+            <h1>Never Miss a Lead Again.<br>Zero-Lag AI Response. 24/7.</h1>
+            <p>
+                AI Booking Agent installs an intelligent response agent that instantly engages, qualifies,
+                and books leads from your website, Facebook, and Google — in under 60 seconds.
+                No more lost calls. No more slow follow-ups.
+            </p>
+            <div class="btn-hero-group">
+                <a href="#contact" class="btn btn-primary">Book a Strategy Call</a>
+                <a href="#how-it-works" class="btn btn-secondary">See How It Works ↓</a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="num">&lt; 60s</div>
+                    <div class="label">Response Time</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="num">3x</div>
+                    <div class="label">More Booked Appointments</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="num">$997</div>
+                    <div class="label">Per Month (Flat)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════ FEATURES ════════════ -->
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>What the AI Booking Agent Does</h2>
+                <p>One integration. Three channels. Unlimited potential.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Engagement</h3>
+                    <p>Responds to every inquiry from web forms, Facebook Messenger, and Google Business Profile — in under 60 seconds. 24/7, including weekends and holidays.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Smart Qualification</h3>
+                    <p>Asks the right questions to qualify leads automatically: budget, timeline, project scope, and contact info. Only high-quality leads reach your calendar.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Auto-Booking</h3>
+                    <p>Sends a personalized booking link to every qualified lead. They pick a time that works — the appointment lands on your calendar. No back-and-forth.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI-Powered, Human Tone</h3>
+                    <p>Powered by GPT-4o / Claude. Every response sounds like your best team member — professional, warm, and on-brand. Customizable persona per business.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Performance Dashboard</h3>
+                    <p>See every lead, response, and booking in real-time. Know your response time, booking rate, and revenue impact at a glance.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔌</div>
+                    <h3>Plug &amp; Play Setup</h3>
+                    <p>Works with your existing website, CRM, and calendar. Setup takes 48 hours. We handle the integration — you focus on delivering service.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════ HOW IT WORKS ════════════ -->
+    <section id="how-it-works" class="bg-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>How It Works</h2>
+                <p>From zero to 24/7 lead capture in three simple steps.</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <h3>Connect</h3>
+                    <p>We connect the AI agent to your website, Facebook page, and Google Business Profile. One integration covers all your lead channels.</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <h3>Train</h3>
+                    <p>We train the agent on your services, pricing, availability, and brand voice. It sounds like you — not a robot.</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <h3>Convert</h3>
+                    <p>Every lead gets an instant response, qualification, and booking link. You wake up to a full calendar without lifting a finger.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════ PRICING ════════════ -->
+    <section id="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Simple Pricing</h2>
+                <p>Less than a part-time receptionist. Way more coverage.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="plan-name">Premium</div>
+                    <div class="price">$997 <span>/mo</span></div>
+                    <div class="price-sub">Flat rate. Unlimited leads.</div>
+                    <ul>
+                        <li>AI response agent — 3 channels</li>
+                        <li>Lead qualification &amp; scoring</li>
+                        <li>Automated calendar booking</li>
+                        <li>Performance dashboard</li>
+                        <li>Custom AI persona training</li>
+                        <li>Email &amp; chat support</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Get Started</a>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="plan-name">Performance</div>
+                    <div class="price">$497 <span>/mo</span></div>
+                    <div class="price-sub">+ $50 per booked appointment</div>
+                    <ul>
+                        <li>AI response agent — 3 channels</li>
+                        <li>Lead qualification &amp; scoring</li>
+                        <li>Automated calendar booking</li>
+                        <li>Performance dashboard</li>
+                        <li>Custom AI persona training</li>
+                        <li>Priority email &amp; chat support</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Get Started</a>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 24px; color: #64748b; font-size: 0.9rem;">
+                One-time setup fee: $1,000 (includes integration &amp; AI training).<br>
+                No long-term contract. Cancel anytime.
+            </p>
+        </div>
+    </section>
+
+    <!-- ════════════ TESTIMONIAL ════════════ -->
+    <section class="bg-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Real Results</h2>
+                <p>From 8-hour response times to under 60 seconds.</p>
+            </div>
+            <div class="testimonial">
+                <blockquote>
+                    "Our response time went from 8 hours to 12 seconds. We booked 3x more
+                    appointments in the first month and didn't have to hire anyone. The setup
+                    took 2 days and we haven't touched it since. It just works."
+                </blockquote>
+                <div class="author">
+                    Mike Reynolds <span>— Owner, Reynolds HVAC &amp; Plumbing, Dallas TX</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════ CTA ════════════ -->
+    <section id="contact" class="cta-section">
+        <div class="container">
+            <h2>Ready to Never Miss a Lead Again?</h2>
+            <p>
+                Book a 15-minute strategy call. We'll run a free Speed-to-Lead audit
+                on your business and show you exactly how much revenue you're leaving on the table.
+            </p>
+            <a href="https://calendly.com/aibookingagent/strategy-call" class="btn btn-primary" target="_blank">
+                Book Your Free Audit Call →
+            </a>
+            <p style="margin-top: 16px; font-size: 0.85rem; opacity: 0.7;">
+                No commitment. No sales pitch. Just data and a solution.
+            </p>
+        </div>
+    </section>
+
+    <!-- ════════════ FOOTER ════════════ -->
+    <footer>
+        <div class="container">
+            <p>
+                <strong>AI Booking Agent</strong> — Zero-Lag Response Agents for Local Service Businesses.
+            </p>
+            <p style="margin-top: 8px;">
+                <a href="mailto:hello@aibookingagent.co">hello@aibookingagent.co</a> &middot;
+                <a href="#">Privacy Policy</a> &middot;
+                <a href="#">Terms of Service</a>
+            </p>
+            <p style="margin-top: 16px; font-size: 0.8rem;">
+                &copy; 2025 AI Booking Agent. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
