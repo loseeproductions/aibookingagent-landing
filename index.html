@@ -1,560 +1,354 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Booking Agent — Zero-Lag Response Agents for Local Service Businesses</title>
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T5QT39VMK0"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-T5QT39VMK0');
-    </script>
-    <meta name="description" content="AI Booking Agent installs AI response agents that engage, qualify, and book leads under 60 seconds — 24/7. For HVAC, law, dental, solar, real estate & roofing.">
-    <link rel="icon" type="image/png" href="assets/favicon.png">
-    <style>
-        /* ── Reset & Base ── */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            color: #1a1a2e;
-            line-height: 1.6;
-            background: #f8fafc;
-        }
-        a { color: #1a237e; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        img { max-width: 100%; height: auto; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-
-        /* ── Typography ── */
-        h1 { font-size: 2.75rem; font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; }
-        h2 { font-size: 2rem; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; }
-        h3 { font-size: 1.25rem; font-weight: 600; line-height: 1.3; }
-        p { margin-bottom: 1rem; }
-        @media (max-width: 768px) {
-            h1 { font-size: 2rem; }
-            h2 { font-size: 1.5rem; }
-        }
-
-        /* ── Colors ── */
-        .brand-primary { color: #1a237e; }
-        .brand-accent { color: #00c853; }
-        .bg-primary { background: #1a237e; }
-        .bg-accent { background: #00c853; }
-        .bg-light { background: #f0f4ff; }
-        .bg-white { background: #ffffff; }
-        .text-white { color: #ffffff; }
-        .text-gray { color: #64748b; }
-
-        /* ── Header / Nav ── */
-        header {
-            background: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 16px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        header .container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .logo {
-            font-size: 1.35rem;
-            font-weight: 800;
-            color: #1a237e;
-        }
-        .logo span { color: #00c853; }
-        nav a {
-            margin-left: 28px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #475569;
-        }
-        nav a:hover { color: #1a237e; }
-        .btn-nav {
-            background: #1a237e;
-            color: #fff !important;
-            padding: 8px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-        }
-        .btn-nav:hover { background: #0d1457; }
-
-        /* ── Hero ── */
-        .hero {
-            padding: 80px 0 64px;
-            text-align: center;
-            background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #3949ab 100%);
-            color: #fff;
-        }
-        .hero h1 {
-            margin-bottom: 20px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .hero p {
-            font-size: 1.15rem;
-            opacity: 0.9;
-            max-width: 640px;
-            margin: 0 auto 36px;
-            line-height: 1.7;
-        }
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 48px;
-            margin-top: 48px;
-            flex-wrap: wrap;
-        }
-        .hero-stat { text-align: center; }
-        .hero-stat .num { font-size: 2rem; font-weight: 800; color: #00c853; }
-        .hero-stat .label { font-size: 0.85rem; opacity: 0.8; margin-top: 4px; }
-
-        /* ── Buttons ── */
-        .btn {
-            display: inline-block;
-            padding: 14px 36px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: all 0.2s;
-            border: none;
-            cursor: pointer;
-        }
-        .btn-primary {
-            background: #00c853;
-            color: #1a237e;
-        }
-        .btn-primary:hover {
-            background: #00b34a;
-            transform: translateY(-1px);
-            box-shadow: 0 8px 24px rgba(0, 200, 83, 0.3);
-        }
-        .btn-secondary {
-            background: rgba(255,255,255,0.15);
-            color: #fff;
-            backdrop-filter: blur(4px);
-        }
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.25);
-        }
-        .btn-hero-group {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        /* ── Sections ── */
-        section { padding: 72px 0; }
-        .section-title {
-            text-align: center;
-            margin-bottom: 56px;
-        }
-        .section-title h2 { margin-bottom: 12px; }
-        .section-title p {
-            color: #64748b;
-            max-width: 560px;
-            margin: 0 auto;
-        }
-
-        /* ── Features Grid ── */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-        }
-        @media (max-width: 900px) {
-            .features-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 600px) {
-            .features-grid { grid-template-columns: 1fr; }
-        }
-        .feature-card {
-            background: #fff;
-            border-radius: 14px;
-            padding: 32px 28px;
-            border: 1px solid #e2e8f0;
-            transition: box-shadow 0.2s;
-        }
-        .feature-card:hover {
-            box-shadow: 0 8px 32px rgba(0,0,0,0.06);
-        }
-        .feature-icon {
-            font-size: 2rem;
-            margin-bottom: 16px;
-        }
-        .feature-card h3 { margin-bottom: 10px; color: #1a237e; }
-        .feature-card p { font-size: 0.92rem; color: #64748b; margin: 0; }
-
-        /* ── How It Works ── */
-        .steps {
-            display: flex;
-            gap: 24px;
-            justify-content: center;
-            counter-reset: step;
-        }
-        @media (max-width: 768px) {
-            .steps { flex-direction: column; }
-        }
-        .step {
-            background: #fff;
-            border-radius: 14px;
-            padding: 32px 28px;
-            border: 1px solid #e2e8f0;
-            flex: 1;
-            position: relative;
-            text-align: center;
-        }
-        .step-num {
-            width: 44px;
-            height: 44px;
-            background: #1a237e;
-            color: #fff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1.15rem;
-            margin: 0 auto 16px;
-        }
-        .step h3 { margin-bottom: 8px; }
-        .step p { font-size: 0.9rem; color: #64748b; margin: 0; }
-
-        /* ── Pricing ── */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 32px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        @media (max-width: 700px) {
-            .pricing-grid { grid-template-columns: 1fr; }
-        }
-        .pricing-card {
-            background: #fff;
-            border-radius: 16px;
-            padding: 36px 32px;
-            border: 2px solid #e2e8f0;
-            text-align: center;
-        }
-        .pricing-card.featured {
-            border-color: #00c853;
-            box-shadow: 0 0 0 1px #00c853;
-        }
-        .pricing-card .plan-name {
-            font-size: 1.15rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #64748b;
-            margin-bottom: 8px;
-        }
-        .pricing-card .price {
-            font-size: 3rem;
-            font-weight: 800;
-            color: #1a237e;
-            margin-bottom: 4px;
-        }
-        .pricing-card .price span {
-            font-size: 1rem;
-            font-weight: 500;
-            color: #64748b;
-        }
-        .pricing-card .price-sub {
-            font-size: 0.9rem;
-            color: #64748b;
-            margin-bottom: 24px;
-        }
-        .pricing-card ul {
-            list-style: none;
-            text-align: left;
-            margin-bottom: 28px;
-        }
-        .pricing-card li {
-            padding: 8px 0;
-            font-size: 0.92rem;
-            border-bottom: 1px solid #f1f5f9;
-        }
-        .pricing-card li::before {
-            content: "✅ ";
-            color: #00c853;
-        }
-        .pricing-card .btn {
-            width: 100%;
-        }
-
-        /* ── Testimonial ── */
-        .testimonial {
-            background: #fff;
-            border-radius: 16px;
-            padding: 40px 36px;
-            max-width: 640px;
-            margin: 0 auto;
-            border: 1px solid #e2e8f0;
-        }
-        .testimonial blockquote {
-            font-size: 1.1rem;
-            font-style: italic;
-            color: #334155;
-            margin-bottom: 20px;
-        }
-        .testimonial .author {
-            font-weight: 600;
-            color: #1a237e;
-        }
-        .testimonial .author span {
-            font-weight: 400;
-            color: #64748b;
-            font-size: 0.9rem;
-        }
-
-        /* ── CTA ── */
-        .cta-section {
-            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
-            color: #fff;
-            text-align: center;
-            padding: 72px 0;
-        }
-        .cta-section h2 { margin-bottom: 16px; }
-        .cta-section p {
-            opacity: 0.9;
-            max-width: 520px;
-            margin: 0 auto 32px;
-        }
-
-        /* ── Footer ── */
-        footer {
-            background: #0f172a;
-            color: #94a3b8;
-            padding: 40px 0;
-            text-align: center;
-            font-size: 0.85rem;
-        }
-        footer a { color: #cbd5e1; }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Booking Agent — Zero-Lag Response Agents</title>
+<meta name="description" content="AI Booking Agent installs an intelligent agent that engages, qualifies, and books leads from your website, Facebook, and Google in under 60 seconds.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%237C86FF'/%3E%3Cpath d='M35 10 18 36h11l-2 18 19-28H34l1-16z' fill='%230B0C12'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-T5QT39VMK0"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-T5QT39VMK0');</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#0B0C12;color:#EDEFF7;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes pulseGlow{0%,100%{opacity:.55}50%{opacity:.95}}
+@keyframes dotBlink{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+::selection{background:#7C86FF;color:#0B0C12}
+[data-reveal]{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .8s cubic-bezier(.16,1,.3,1)}
+[data-reveal].visible{opacity:1;transform:none}
+.card-hover{transition:border-color .2s}
+.card-hover:hover{border-color:rgba(124,134,255,.4) !important}
+nav a:hover{color:#EDEFF7 !important}
+.btn-primary:hover{background:#8F98FF !important}
+.btn-ghost:hover{border-color:rgba(255,255,255,.32) !important}
+.btn-ghost-indigo:hover{border-color:#7C86FF !important;color:#B9BFFF !important}
+@media(max-width:768px){
+  .hero-grid{grid-template-columns:1fr !important}
+  .hero-chat{display:none}
+  .how-grid{grid-template-columns:1fr !important}
+  .how-img{display:none}
+  .features-grid{grid-template-columns:1fr !important}
+  .pricing-grid{grid-template-columns:1fr !important}
+  .testimonial-grid{grid-template-columns:1fr !important}
+  nav .nav-links{display:none}
+}
+</style>
 </head>
 <body>
 
-    <!-- ════════════ HEADER ════════════ -->
-    <header>
-        <div class="container">
-            <div class="logo">
-                AI Booking <span>Agent</span>
-            </div>
-            <nav>
-                <a href="#how-it-works">How It Works</a>
-                <a href="#pricing">Pricing</a>
-                <a href="https://calendly.com/aibookingagentmeeting/30min" class="btn-nav" target="_blank">Book a Call</a>
-            </nav>
-        </div>
-    </header>
+<!-- NAV -->
+<nav style="position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(11,12,18,.72);border-bottom:1px solid rgba(255,255,255,.07)">
+  <div style="max-width:1140px;margin:0 auto;padding:0 24px;height:68px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+    <a href="#top" style="display:flex;align-items:center;gap:10px;color:#EDEFF7">
+      <span style="width:32px;height:32px;border-radius:8px;background:#7C86FF;display:grid;place-items:center;box-shadow:0 0 18px rgba(124,134,255,.45);flex-shrink:0">
+        <svg viewBox="0 0 64 64" width="18" height="18"><path d="M35 10 18 36h11l-2 18 19-28H34l1-16z" fill="#0B0C12"/></svg>
+      </span>
+      <span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;letter-spacing:-.01em">AI Booking Agent</span>
+    </a>
+    <div class="nav-links" style="display:flex;align-items:center;gap:28px">
+      <a href="#features" style="color:#9AA0B4;font-size:14px">Features</a>
+      <a href="#how-it-works" style="color:#9AA0B4;font-size:14px">How It Works</a>
+      <a href="#pricing" style="color:#9AA0B4;font-size:14px">Pricing</a>
+      <a href="https://calendly.com/aibookingagentmeeting/30min" target="_blank" class="btn-primary" style="background:#7C86FF;color:#0B0C12;font-weight:600;font-size:14px;padding:9px 18px;border-radius:8px;box-shadow:0 0 20px rgba(124,134,255,.35)">Book a Call</a>
+    </div>
+  </div>
+</nav>
 
-    <!-- ════════════ HERO ════════════ -->
-    <section class="hero">
-        <div class="container">
-            <h1>Never Miss a Lead Again.<br>Zero-Lag AI Response. 24/7.</h1>
-            <p>
-                AI Booking Agent installs an intelligent response agent that instantly engages, qualifies,
-                and books leads from your website, Facebook, and Google — in under 60 seconds.
-                No more lost calls. No more slow follow-ups.
-            </p>
-            <div class="btn-hero-group">
-                <a href="https://calendly.com/aibookingagentmeeting/30min" class="btn btn-primary" target="_blank">Book a Strategy Call</a>
-                <a href="#how-it-works" class="btn btn-secondary">See How It Works ↓</a>
-            </div>
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <div class="num">&lt; 60s</div>
-                    <div class="label">Response Time</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="num">3x</div>
-                    <div class="label">More Booked Appointments</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="num">$997</div>
-                    <div class="label">Per Month (Flat)</div>
-                </div>
-            </div>
+<!-- HERO -->
+<header id="top" style="position:relative;overflow:hidden">
+  <div style="position:absolute;top:-260px;left:50%;transform:translateX(-50%);width:900px;height:600px;border-radius:50%;background:radial-gradient(closest-side,rgba(124,134,255,.22),transparent 70%);animation:pulseGlow 6s ease-in-out infinite;pointer-events:none"></div>
+  <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 70% 60% at 50% 0%,black,transparent);-webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 0%,black,transparent);pointer-events:none"></div>
+  <div class="hero-grid" style="position:relative;max-width:1140px;margin:0 auto;padding:88px 24px 72px;display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center">
+    <div>
+      <div style="display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(124,134,255,.35);background:rgba(124,134,255,.08);color:#B9BFFF;font-size:12.5px;font-weight:500;padding:6px 12px;border-radius:999px;margin-bottom:22px">
+        <span style="width:7px;height:7px;border-radius:50%;background:#5CE6B8;box-shadow:0 0 8px #5CE6B8;flex-shrink:0"></span>
+        Responding to leads right now — 24/7
+      </div>
+      <h1 style="font-family:'Space Grotesk',sans-serif;font-size:clamp(38px,4.6vw,58px);line-height:1.06;letter-spacing:-.03em;margin:0 0 20px;font-weight:700">
+        Never miss a lead again.<br>
+        <span style="color:#7C86FF">Zero-lag AI response.</span>
+      </h1>
+      <p style="color:#9AA0B4;font-size:17px;line-height:1.65;margin:0 0 30px;max-width:520px">
+        We install an intelligent agent that engages, qualifies, and books leads from your website, Facebook, and Google — in under 60 seconds. No lost calls. No slow follow-ups.
+      </p>
+      <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:44px">
+        <a href="https://calendly.com/aibookingagentmeeting/30min" target="_blank" class="btn-primary" style="background:#7C86FF;color:#0B0C12;font-weight:600;font-size:15px;padding:14px 26px;border-radius:10px;box-shadow:0 0 28px rgba(124,134,255,.4)">Book a Strategy Call</a>
+        <a href="#how-it-works" class="btn-ghost" style="color:#EDEFF7;font-size:15px;padding:14px 22px;border-radius:10px;border:1px solid rgba(255,255,255,.14)">See How It Works ↓</a>
+      </div>
+      <div style="display:flex;border-top:1px solid rgba(255,255,255,.08);padding-top:26px">
+        <div style="flex:1">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;color:#7C86FF">&lt; 60s</div>
+          <div style="color:#9AA0B4;font-size:13px;margin-top:4px">Response time</div>
         </div>
-    </section>
-
-    <!-- ════════════ FEATURES ════════════ -->
-    <section>
-        <div class="container">
-            <div class="section-title">
-                <h2>What the AI Booking Agent Does</h2>
-                <p>One integration. Three channels. Unlimited potential.</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Instant Engagement</h3>
-                    <p>Responds to every inquiry from web forms, Facebook Messenger, and Google Business Profile — in under 60 seconds. 24/7, including weekends and holidays.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Smart Qualification</h3>
-                    <p>Asks the right questions to qualify leads automatically: budget, timeline, project scope, and contact info. Only high-quality leads reach your calendar.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📅</div>
-                    <h3>Auto-Booking</h3>
-                    <p>Sends a personalized booking link to every qualified lead. They pick a time that works — the appointment lands on your calendar. No back-and-forth.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🤖</div>
-                    <h3>AI-Powered, Human Tone</h3>
-                    <p>Powered by GPT-4o / Claude. Every response sounds like your best team member — professional, warm, and on-brand. Customizable persona per business.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Performance Dashboard</h3>
-                    <p>See every lead, response, and booking in real-time. Know your response time, booking rate, and revenue impact at a glance.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔌</div>
-                    <h3>Plug &amp; Play Setup</h3>
-                    <p>Works with your existing website, CRM, and calendar. Setup takes 48 hours. We handle the integration — you focus on delivering service.</p>
-                </div>
-            </div>
+        <div style="flex:1;border-left:1px solid rgba(255,255,255,.08);padding-left:28px">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;color:#7C86FF">3×</div>
+          <div style="color:#9AA0B4;font-size:13px;margin-top:4px">More booked appointments</div>
         </div>
-    </section>
-
-    <!-- ════════════ HOW IT WORKS ════════════ -->
-    <section id="how-it-works" class="bg-light">
-        <div class="container">
-            <div class="section-title">
-                <h2>How It Works</h2>
-                <p>From zero to 24/7 lead capture in three simple steps.</p>
-            </div>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-num">1</div>
-                    <h3>Connect</h3>
-                    <p>We connect the AI agent to your website, Facebook page, and Google Business Profile. One integration covers all your lead channels.</p>
-                </div>
-                <div class="step">
-                    <div class="step-num">2</div>
-                    <h3>Train</h3>
-                    <p>We train the agent on your services, pricing, availability, and brand voice. It sounds like you — not a robot.</p>
-                </div>
-                <div class="step">
-                    <div class="step-num">3</div>
-                    <h3>Convert</h3>
-                    <p>Every lead gets an instant response, qualification, and booking link. You wake up to a full calendar without lifting a finger.</p>
-                </div>
-            </div>
+        <div style="flex:1;border-left:1px solid rgba(255,255,255,.08);padding-left:28px">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;color:#7C86FF">$997</div>
+          <div style="color:#9AA0B4;font-size:13px;margin-top:4px">Per month, flat</div>
         </div>
-    </section>
+      </div>
+    </div>
 
-    <!-- ════════════ PRICING ════════════ -->
-    <section id="pricing">
-        <div class="container">
-            <div class="section-title">
-                <h2>Simple Pricing</h2>
-                <p>Less than a part-time receptionist. Way more coverage.</p>
-            </div>
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <div class="plan-name">Premium</div>
-                    <div class="price">$997 <span>/mo</span></div>
-                    <div class="price-sub">Flat rate. Unlimited leads.</div>
-                    <ul>
-                        <li>AI response agent — 3 channels</li>
-                        <li>Lead qualification &amp; scoring</li>
-                        <li>Automated calendar booking</li>
-                        <li>Performance dashboard</li>
-                        <li>Custom AI persona training</li>
-                        <li>Email &amp; chat support</li>
-                    </ul>
-                    <a href="https://calendly.com/aibookingagentmeeting/30min" class="btn btn-primary" target="_blank">Get Started</a>
-                </div>
-                <div class="pricing-card featured">
-                    <div class="plan-name">Performance</div>
-                    <div class="price">$497 <span>/mo</span></div>
-                    <div class="price-sub">+ $50 per booked appointment</div>
-                    <ul>
-                        <li>AI response agent — 3 channels</li>
-                        <li>Lead qualification &amp; scoring</li>
-                        <li>Automated calendar booking</li>
-                        <li>Performance dashboard</li>
-                        <li>Custom AI persona training</li>
-                        <li>Priority email &amp; chat support</li>
-                    </ul>
-                    <a href="https://calendly.com/aibookingagentmeeting/30min" class="btn btn-primary" target="_blank">Get Started</a>
-                </div>
-            </div>
-            <p style="text-align: center; margin-top: 24px; color: #64748b; font-size: 0.9rem;">
-                One-time setup fee: $1,000 (includes integration &amp; AI training).<br>
-                No long-term contract. Cancel anytime.
-            </p>
+    <!-- Chat demo -->
+    <div class="hero-chat" style="animation:floaty 7s ease-in-out infinite">
+      <div style="background:#12141E;border:1px solid rgba(255,255,255,.09);border-radius:18px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 1px rgba(124,134,255,.08);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.02)">
+          <span style="width:28px;height:28px;border-radius:8px;background:#7C86FF;display:grid;place-items:center;flex-shrink:0">
+            <svg viewBox="0 0 64 64" width="15" height="15"><path d="M35 10 18 36h11l-2 18 19-28H34l1-16z" fill="#0B0C12"/></svg>
+          </span>
+          <div>
+            <div style="font-size:13.5px;font-weight:600">Reynolds HVAC — AI Agent</div>
+            <div style="font-size:11.5px;color:#5CE6B8;display:flex;align-items:center;gap:5px"><span style="width:6px;height:6px;border-radius:50%;background:#5CE6B8;display:block"></span>Online · replies in seconds</div>
+          </div>
+          <div style="margin-left:auto;font-size:11px;color:#9AA0B4;border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:4px 8px;white-space:nowrap">Facebook · Web · Google</div>
         </div>
-    </section>
-
-    <!-- ════════════ TESTIMONIAL ════════════ -->
-    <section class="bg-light">
-        <div class="container">
-            <div class="section-title">
-                <h2>Real Results</h2>
-                <p>From 8-hour response times to under 60 seconds.</p>
-            </div>
-            <div class="testimonial">
-                <blockquote>
-                    "Our response time went from 8 hours to 12 seconds. We booked 3x more
-                    appointments in the first month and didn't have to hire anyone. The setup
-                    took 2 days and we haven't touched it since. It just works."
-                </blockquote>
-                <div class="author">
-                    Mike Reynolds <span>— Owner, Reynolds HVAC &amp; Plumbing, Dallas TX</span>
-                </div>
-            </div>
+        <div id="chat-messages" style="padding:20px 18px;display:flex;flex-direction:column;gap:12px;min-height:330px"></div>
+        <div id="typing-indicator" style="display:none;padding:0 18px 12px">
+          <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:14px 14px 14px 4px;padding:12px 16px;display:inline-flex;gap:5px;align-items:center">
+            <span style="width:6px;height:6px;border-radius:50%;background:#9AA0B4;display:block;animation:dotBlink 1.2s infinite"></span>
+            <span style="width:6px;height:6px;border-radius:50%;background:#9AA0B4;display:block;animation:dotBlink 1.2s .15s infinite"></span>
+            <span style="width:6px;height:6px;border-radius:50%;background:#9AA0B4;display:block;animation:dotBlink 1.2s .3s infinite"></span>
+          </div>
         </div>
-    </section>
-
-    <!-- ════════════ CTA ════════════ -->
-    <section id="contact" class="cta-section">
-        <div class="container">
-            <h2>Ready to Never Miss a Lead Again?</h2>
-            <p>
-                Book a 15-minute strategy call. We'll run a free Speed-to-Lead audit
-                on your business and show you exactly how much revenue you're leaving on the table.
-            </p>
-            <a href="https://calendly.com/aibookingagentmeeting/30min" class="btn btn-primary" target="_blank">
-                Book Your Free Audit Call →
-            </a>
-            <p style="margin-top: 16px; font-size: 0.85rem; opacity: 0.7;">
-                No commitment. No sales pitch. Just data and a solution.
-            </p>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-top:1px solid rgba(255,255,255,.07);font-size:11.5px;color:#9AA0B4">
+          <span>New lead · 11:42 PM Saturday</span>
+          <span style="color:#7C86FF;font-weight:600">Response time: 12s</span>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</header>
 
-    <!-- ════════════ FOOTER ════════════ -->
-    <footer>
-        <div class="container">
-            <p>
-                <strong>AI Booking Agent</strong> — Zero-Lag Response Agents for Local Service Businesses.
-            </p>
-            <p style="margin-top: 8px;">
-                <a href="mailto:hello@aibookingagent.co">hello@aibookingagent.co</a> &middot;
-                <a href="#">Privacy Policy</a> &middot;
-                <a href="#">Terms of Service</a>
-            </p>
-            <p style="margin-top: 16px; font-size: 0.8rem;">
-                &copy; 2025 AI Booking Agent. All rights reserved.
-            </p>
+
+
+<!-- FEATURES -->
+<section id="features" style="max-width:1140px;margin:0 auto;padding:90px 24px 40px">
+  <div data-reveal style="text-align:center;margin-bottom:54px">
+    <div style="color:#7C86FF;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">What it does</div>
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,3.4vw,40px);letter-spacing:-.02em;margin:0 0 12px;font-weight:700">One integration. Three channels.</h2>
+    <p style="color:#9AA0B4;font-size:16px">Everything a full-time receptionist does — at machine speed.</p>
+  </div>
+  <div class="features-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
+    <div data-reveal class="card-hover" style="background:#12141E;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:26px">
+      <div style="width:40px;height:40px;border-radius:10px;background:rgba(124,134,255,.12);border:1px solid rgba(124,134,255,.28);display:grid;place-items:center;color:#7C86FF;margin-bottom:16px"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg></div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin-bottom:8px">Instant Engagement</div>
+      <div style="color:#9AA0B4;font-size:14px;line-height:1.6">Responds to every inquiry from web forms, Facebook Messenger, and Google Business Profile — in under 60 seconds. 24/7, including weekends and holidays.</div>
+    </div>
+    <div data-reveal class="card-hover" style="background:#12141E;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:26px">
+      <div style="width:40px;height:40px;border-radius:10px;background:rgba(124,134,255,.12);border:1px solid rgba(124,134,255,.28);display:grid;place-items:center;color:#7C86FF;margin-bottom:16px"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin-bottom:8px">Smart Qualification</div>
+      <div style="color:#9AA0B4;font-size:14px;line-height:1.6">Asks the right questions automatically: budget, timeline, project scope, and contact info. Only high-quality leads reach your calendar.</div>
+    </div>
+    <div data-reveal class="card-hover" style="background:#12141E;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:26px">
+      <div style="width:40px;height:40px;border-radius:10px;background:rgba(124,134,255,.12);border:1px solid rgba(124,134,255,.28);display:grid;place-items:center;color:#7C86FF;margin-bottom:16px"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg></div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin-bottom:8px">Auto-Booking</div>
+      <div style="color:#9AA0B4;font-size:14px;line-height:1.6">Sends a personalized booking link to every qualified lead. They pick a time — the appointment lands on your calendar. No back-and-forth.</div>
+    </div>
+    <div data-reveal class="card-hover" style="background:#12141E;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:26px">
+      <div style="width:40px;height:40px;border-radius:10px;background:rgba(124,134,255,.12);border:1px solid rgba(124,134,255,.28);display:grid;place-items:center;color:#7C86FF;margin-bottom:16px"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-5 4V6a1 1 0 0 1 1-1z"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="12.5" x2="13" y2="12.5"/></svg></div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin-bottom:8px">AI-Powered, Human Tone</div>
+      <div style="color:#9AA0B4;font-size:14px;line-height:1.6">Powered by GPT-4o / Claude. Every response sounds like your best team member — professional, warm, and on-brand.</div>
+    </div>
+    <div data-reveal class="card-hover" style="background:#12141E;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:26px">
+      <div style="width:40px;height:40px;border-radius:10px;background:rgba(124,134,255,.12);border:1px solid rgba(124,134,255,.28);display:grid;place-items:center;color:#7C86FF;margin-bottom:16px"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="4" y1="20" x2="4" y2="10"/><line x1="10" y1="20" x2="10" y2="4"/><line x1="16" y1="20" x2="16" y2="12"/><line x1="21" y1="20" x2="3" y2="20"/></svg></div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin-bottom:8px">Performance Dashboard</div>
+      <div style="color:#9AA0B4;font-size:14px;line-height:1.6">See every lead, response, and booking in real time. Know your response time, booking rate, and revenue impact at a glance.</div>
+    </div>
+    <div data-reveal class="card-hover" style="background:#12141E;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:26px">
+      <div style="width:40px;height:40px;border-radius:10px;background:rgba(124,134,255,.12);border:1px solid rgba(124,134,255,.28);display:grid;place-items:center;color:#7C86FF;margin-bottom:16px"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="9" y1="3" x2="9" y2="8"/><line x1="15" y1="3" x2="15" y2="8"/><path d="M6 8h12v3a6 6 0 0 1-6 6 6 6 0 0 1-6-6V8z"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin-bottom:8px">Plug & Play Setup</div>
+      <div style="color:#9AA0B4;font-size:14px;line-height:1.6">Works with your existing website, CRM, and calendar. Setup takes 48 hours. We handle the integration — you deliver the service.</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works" style="max-width:1140px;margin:0 auto;padding:80px 24px">
+  <div class="how-grid" style="display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center">
+    <div class="how-img" data-reveal style="position:relative;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.09)">
+      <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=900&auto=format&fit=crop" alt="Technician on the job" style="display:block;width:100%;height:480px;object-fit:cover;filter:saturate(.85)">
+      <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(11,12,18,.9))"></div>
+      <div style="position:absolute;left:18px;right:18px;bottom:18px;background:rgba(18,20,30,.85);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px">
+        <span style="width:34px;height:34px;border-radius:50%;background:rgba(92,230,184,.15);border:1px solid rgba(92,230,184,.4);display:grid;place-items:center;color:#5CE6B8;font-size:15px;font-weight:700;flex-shrink:0">✓</span>
+        <div>
+          <div style="font-size:13.5px;font-weight:600">Appointment booked while you're on a job</div>
+          <div style="font-size:12px;color:#9AA0B4">Tue 9:30 AM · Qualified lead · Plano, TX</div>
         </div>
-    </footer>
+      </div>
+    </div>
+    <div>
+      <div data-reveal>
+        <div style="color:#7C86FF;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">How it works</div>
+        <h2 style="font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,3.4vw,40px);letter-spacing:-.02em;margin:0 0 34px;font-weight:700">Zero to 24/7 lead capture<br>in three steps.</h2>
+      </div>
+      <div>
+        <div data-reveal style="display:flex;gap:20px;padding:22px 0;border-top:1px solid rgba(255,255,255,.08)">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#0B0C12;background:#7C86FF;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex-shrink:0">1</div>
+          <div><div style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin-bottom:6px">Connect</div><div style="color:#9AA0B4;font-size:14.5px;line-height:1.6">We connect the AI agent to your website, Facebook page, and Google Business Profile. One integration covers all your lead channels.</div></div>
+        </div>
+        <div data-reveal style="display:flex;gap:20px;padding:22px 0;border-top:1px solid rgba(255,255,255,.08)">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#0B0C12;background:#7C86FF;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex-shrink:0">2</div>
+          <div><div style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin-bottom:6px">Train</div><div style="color:#9AA0B4;font-size:14.5px;line-height:1.6">We train the agent on your services, pricing, availability, and brand voice. It sounds like you — not a robot.</div></div>
+        </div>
+        <div data-reveal style="display:flex;gap:20px;padding:22px 0;border-top:1px solid rgba(255,255,255,.08)">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#0B0C12;background:#7C86FF;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex-shrink:0">3</div>
+          <div><div style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin-bottom:6px">Convert</div><div style="color:#9AA0B4;font-size:14.5px;line-height:1.6">Every lead gets an instant response, qualification, and booking link. You wake up to a full calendar without lifting a finger.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+
+
+<!-- PRICING -->
+<section id="pricing" style="max-width:1140px;margin:0 auto;padding:80px 24px">
+  <div data-reveal style="text-align:center;margin-bottom:50px">
+    <div style="color:#7C86FF;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">Pricing</div>
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,3.4vw,40px);letter-spacing:-.02em;margin:0 0 12px;font-weight:700">Less than a part-time receptionist.</h2>
+    <p style="color:#9AA0B4;font-size:16px">Way more coverage. No long-term contract — cancel anytime.</p>
+  </div>
+  <div class="pg" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:880px;margin:0 auto">
+    <div data-reveal style="position:relative;background:#12141E;border:1px solid rgba(124,134,255,.55);border-radius:16px;padding:34px 30px;box-shadow:0 0 44px rgba(124,134,255,.12)">
+      <div style="position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:#7C86FF;color:#0B0C12;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:5px 14px;border-radius:999px;white-space:nowrap">Most popular</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:#B9BFFF;margin-bottom:14px">Premium</div>
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px"><span style="font-family:'Space Grotesk',sans-serif;font-size:44px;font-weight:700;letter-spacing:-.02em">$997</span><span style="color:#9AA0B4;font-size:15px">/mo</span></div>
+      <div style="color:#9AA0B4;font-size:13.5px;margin-bottom:24px">Flat rate. Unlimited leads.</div>
+      <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:28px">
+        <div style="display:flex;gap:10px;align-items:flex-start;color:#C9CDDB;font-size:14px"><span style="color:#5CE6B8;font-weight:700">✓</span>AI response agent — 3 channels</div>
+        <div style="display:flex;gap:10px;align-items:flex-start;color:#C9CDDB;font-size:14px"><span style="color:#5CE6B8;font-weight:700">✓</span>Lead qualification &amp; scoring</div>
+        <div style="display:flex;gap:10px;align-items:flex-start;color:#C9CDDB;font-size:14px"><span style="color:#5CE6B8;font-weight:700">✓</span>Automated calendar booking</div>
+        <div style="display:flex;gap:10px;align-items:flex-start;color:#C9CDDB;font-size:14px"><span style="color:#5CE6B8;font-weight:700">✓</span>Performance dashboard</div>
+        <div style="display:flex;gap:10px;align-items:flex-start;color:#C9CDDB;font-size:14px"><span style="color:#5CE6B8;font-weight:700">✓</span>Custom AI persona training</div>
+        <div style="display:flex;gap:10px;align-items:flex-start;color:#C9CDDB;font-size:14px"><span style="color:#5CE6B8;font-weight:700">✓</span>Email &amp; chat support</div>
+      </div>
+      <a href="https://calendly.com/aibookingagentmeeting/30min" target="_blank" class="btn-p" style="display:block;text-align:center;background:#7C86FF;color:#0B0C12;font-weight:600;font-size:14.5px;padding:13px;border-radius:10px">Get Started</a>
+    </div>
+    <div data-reveal style="position:relative;background:#12141E;border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:34px 30px">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:#B9BFFF;margin-bottom:14px">Performance</div>
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px"><span style="font-family:'Space Grotesk',sans-serif;font-size:44px;font-weight:700;letter-spacing:-.02em">$497</span><span style="color:#9AA0B4;font-size:15px">/mo</span></div>
+      <div style="color:#9AA0B4;font-size:13.5px;margin-bottom:24px">+ $50 per booked appointment.</div>
+      <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:28px">
+        <div style="display:flex;gap:10px;align-items:flex-start;color:#C9CDDB;font-size:14px"><span style="color:#5CE6B8;font-weight:700">✓</span>AI response agent — 3 channels</div>
+        <div style="display:flex;gap:10px;align-items:flex-start;color:#C9CDDB;font-size:14px"><span style="color:#5CE6B8;font-weight:700">✓</span>Lead qualification &amp; scoring</div>
+        <div style="display:flex;gap:10px;align-items:flex-start;color:#C9CDDB;font-size:14px"><span style="color:#5CE6B8;font-weight:700">✓</span>Automated calendar booking</div>
+        <div style="display:flex;gap:10px;align-items:flex-start;color:#C9CDDB;font-size:14px"><span style="color:#5CE6B8;font-weight:700">✓</span>Performance dashboard</div>
+        <div style="display:flex;gap:10px;align-items:flex-start;color:#C9CDDB;font-size:14px"><span style="color:#5CE6B8;font-weight:700">✓</span>Custom AI persona training</div>
+        <div style="display:flex;gap:10px;align-items:flex-start;color:#C9CDDB;font-size:14px"><span style="color:#5CE6B8;font-weight:700">✓</span>Priority email &amp; chat support</div>
+      </div>
+      <a href="https://calendly.com/aibookingagentmeeting/30min" target="_blank" class="btn-gi" style="display:block;text-align:center;border:1px solid rgba(255,255,255,.18);color:#EDEFF7;font-weight:600;font-size:14.5px;padding:13px;border-radius:10px">Get Started</a>
+    </div>
+  </div>
+  <p data-reveal style="text-align:center;color:#9AA0B4;font-size:13.5px;margin:28px 0 0">One-time setup fee: $1,000 — includes integration &amp; AI training.</p>
+</section>
+
+<!-- TESTIMONIAL -->
+<section style="max-width:1140px;margin:0 auto;padding:80px 24px">
+  <div data-reveal style="background:#12141E;border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:56px;display:grid;grid-template-columns:auto 1fr;gap:44px;align-items:center;position:relative;overflow:hidden">
+    <div style="position:absolute;top:-120px;right:-120px;width:340px;height:340px;border-radius:50%;background:radial-gradient(closest-side,rgba(124,134,255,.14),transparent);pointer-events:none"></div>
+    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&auto=format&fit=crop" alt="Mike Reynolds" style="width:130px;height:130px;border-radius:50%;object-fit:cover;border:2px solid rgba(124,134,255,.5);flex-shrink:0">
+    <div>
+      <div style="color:#7C86FF;font-size:26px;font-family:'Space Grotesk',sans-serif;line-height:1;margin-bottom:14px">"</div>
+      <p style="font-family:'Space Grotesk',sans-serif;font-size:clamp(19px,2.2vw,25px);line-height:1.45;letter-spacing:-.01em;margin:0 0 20px">Our response time went from 8 hours to 12 seconds. We booked 3× more appointments in the first month — and didn't have to hire anyone. It just works.</p>
+      <div style="font-size:14px;color:#9AA0B4"><span style="color:#EDEFF7;font-weight:600">Mike Reynolds</span> — Owner, Reynolds HVAC &amp; Plumbing, Dallas TX</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="position:relative;overflow:hidden;border-top:1px solid rgba(255,255,255,.07)">
+  <div style="position:absolute;bottom:-280px;left:50%;transform:translateX(-50%);width:900px;height:520px;border-radius:50%;background:radial-gradient(closest-side,rgba(124,134,255,.2),transparent 70%);pointer-events:none"></div>
+  <div data-reveal style="position:relative;max-width:760px;margin:0 auto;padding:100px 24px;text-align:center">
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-size:clamp(30px,3.8vw,46px);letter-spacing:-.025em;margin:0 0 18px;font-weight:700">Ready to never miss a lead again?</h2>
+    <p style="color:#9AA0B4;font-size:16.5px;line-height:1.65;margin:0 0 32px">Book a 15-minute strategy call. We'll run a free Speed-to-Lead audit on your business and show you exactly how much revenue you're leaving on the table.</p>
+    <a href="https://calendly.com/aibookingagentmeeting/30min" target="_blank" class="btn-p" style="display:inline-block;background:#7C86FF;color:#0B0C12;font-weight:600;font-size:16px;padding:16px 32px;border-radius:12px;box-shadow:0 0 34px rgba(124,134,255,.45)">Book Your Free Audit Call →</a>
+    <div style="color:#9AA0B4;font-size:13px;margin-top:18px">No commitment. No sales pitch. Just data and a solution.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="border-top:1px solid rgba(255,255,255,.07)">
+  <div style="max-width:1140px;margin:0 auto;padding:34px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="width:26px;height:26px;border-radius:7px;background:#7C86FF;display:grid;place-items:center;flex-shrink:0"><svg viewBox="0 0 64 64" width="14" height="14"><path d="M35 10 18 36h11l-2 18 19-28H34l1-16z" fill="#0B0C12"/></svg></span>
+      <span style="font-size:13px;color:#9AA0B4">© 2026 AI Booking Agent. All rights reserved.</span>
+    </div>
+    <div style="display:flex;gap:22px;font-size:13px">
+      <a href="mailto:tim@aibookingagent.co" class="fl" style="color:#9AA0B4">tim@aibookingagent.co</a>
+      <a href="/privacy" class="fl" style="color:#9AA0B4">Privacy Policy</a>
+      <a href="#" class="fl" style="color:#9AA0B4">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+
+// Chat animation
+const msgs = [
+  { agent: false, text: "Hi — my AC just died and it's 98° out. Can someone come this week?" },
+  { agent: true, text: "So sorry to hear that! We can absolutely help. Is this for a home or a business?", badge: 'Replied in 12 seconds' },
+  { agent: false, text: 'Home — two-story house in Plano.' },
+  { agent: true, text: 'Got it. We have tomorrow at 9:30 AM or 1:00 PM open — which works better?' },
+  { agent: false, text: '9:30 works!' },
+  { agent: true, text: "You're booked for Tuesday 9:30 AM with our senior tech. Confirmation is on its way to your phone.", badge: 'Appointment booked' }
+];
+const chatEl = document.getElementById('chat-messages');
+const typingEl = document.getElementById('chat-typing');
+let shown = 0, alive = true;
+
+function addMsg(m) {
+  const row = document.createElement('div');
+  row.style.cssText = 'display:flex;justify-content:' + (m.agent ? 'flex-start' : 'flex-end');
+  const bubble = document.createElement('div');
+  bubble.style.cssText = m.agent
+    ? 'background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:14px 14px 14px 4px;padding:11px 14px;font-size:13.5px;line-height:1.5;max-width:82%;color:#EDEFF7'
+    : 'background:rgba(124,134,255,.16);border:1px solid rgba(124,134,255,.35);border-radius:14px 14px 4px 14px;padding:11px 14px;font-size:13.5px;line-height:1.5;max-width:78%;color:#DDE0FF';
+  bubble.textContent = m.text;
+  if (m.badge) {
+    const b = document.createElement('div');
+    b.style.cssText = 'margin-top:8px;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#5CE6B8;background:rgba(92,230,184,.1);border:1px solid rgba(92,230,184,.3);padding:4px 9px;border-radius:6px';
+    b.textContent = m.badge;
+    bubble.appendChild(b);
+  }
+  row.appendChild(bubble);
+  chatEl.appendChild(row);
+  chatEl.scrollTop = chatEl.scrollHeight;
+}
+
+function runChat(i) {
+  if (!alive || !chatEl) return;
+  if (i >= msgs.length) {
+    setTimeout(() => { if(!alive) return; chatEl.innerHTML=''; shown=0; setTimeout(() => runChat(0), 800); }, 5000);
+    return;
+  }
+  const m = msgs[i];
+  if (m.agent) {
+    typingEl.style.display = 'block';
+    setTimeout(() => {
+      if (!alive) return;
+      typingEl.style.display = 'none';
+      addMsg(m);
+      setTimeout(() => runChat(i+1), 900);
+    }, 1300);
+  } else {
+    addMsg(m);
+    setTimeout(() => runChat(i+1), 900);
+  }
+}
+setTimeout(() => runChat(0), 900);
+</script>
 </body>
 </html>
