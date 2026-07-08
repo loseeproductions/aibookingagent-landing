@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Job Application Bot — Tim Losee</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0B0C12;color:#EDEFF7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;padding:40px 24px}
+.container{max-width:720px;margin:0 auto}
+h1{font-size:28px;font-weight:700;margin-bottom:8px;color:#fff}
+.subtitle{font-size:15px;color:#9AA0B4;margin-bottom:40px}
+.card{background:#12141E;border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:28px;margin-bottom:20px}
+h2{font-size:17px;font-weight:600;margin-bottom:18px;color:#EDEFF7}
+label{display:block;font-size:13px;color:#9AA0B4;margin-bottom:6px;font-weight:500}
+input[type=text],input[type=url]{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:11px 14px;color:#EDEFF7;font-size:14px;outline:none;transition:border-color .2s}
+input:focus{border-color:#7C86FF}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .2s}
+.btn-primary{background:#7C86FF;color:#0B0C12}
+.btn-primary:hover{background:#8F98FF}
+.btn-secondary{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:#EDEFF7}
+.btn-secondary:hover{border-color:rgba(255,255,255,.3)}
+.divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:#9AA0B4;font-size:12px}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08)}
+.drop-zone{border:2px dashed rgba(255,255,255,.15);border-radius:10px;padding:32px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:16px}
+.drop-zone:hover,.drop-zone.drag-over{border-color:#7C86FF;background:rgba(124,134,255,.05)}
+.drop-zone p{color:#9AA0B4;font-size:14px;margin-bottom:8px}
+.drop-zone span{font-size:12px;color:#5B6280}
+#file-input{display:none}
+.status{margin-top:16px;padding:12px 16px;border-radius:8px;font-size:13px;display:none}
+.status.success{background:rgba(92,230,184,.1);border:1px solid rgba(92,230,184,.3);color:#5CE6B8}
+.status.error{background:rgba(255,100,100,.1);border:1px solid rgba(255,100,100,.3);color:#ff8a80}
+.status.loading{background:rgba(124,134,255,.1);border:1px solid rgba(124,134,255,.3);color:#B9BFFF}
+.job-list{margin-top:12px;max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:6px}
+.job-item{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,.04);border-radius:6px;font-size:12px;color:#9AA0B4}
+.job-item span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:85%}
+.job-item button{background:none;border:none;color:#ff8a80;cursor:pointer;font-size:14px;padding:0 4px;flex:none}
+.count{font-size:12px;color:#7C86FF;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>🤖 Job Application Bot</h1>
+  <p class="subtitle">Paste a job URL or upload a CSV — I'll build the hiring package and apply for you.</p>
+
+  <!-- Single URL -->
+  <div class="card">
+    <h2>Single Job URL</h2>
+    <label for="job-url">Job posting URL (LinkedIn, company site, etc.)</label>
+    <input type="url" id="job-url" placeholder="https://www.linkedin.com/jobs/view/..." autocomplete="off">
+    <div style="margin-top:14px">
+      <button class="btn btn-primary" onclick="submitSingle()">
+        <span>Queue Application</span>
+      </button>
+    </div>
+    <div id="single-status" class="status"></div>
+  </div>
+
+  <div class="divider">or bulk upload</div>
+
+  <!-- Bulk CSV -->
+  <div class="card">
+    <h2>Bulk Upload (CSV)</h2>
+    <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
+      <p>Drop your CSV file here or click to browse</p>
+      <span>One URL per row, single column — no header required</span>
+    </div>
+    <input type="file" id="file-input" accept=".csv,.txt">
+    <div id="job-count" class="count" style="display:none"></div>
+    <div id="job-list" class="job-list"></div>
+    <div style="margin-top:14px;display:flex;gap:10px">
+      <button class="btn btn-primary" id="bulk-submit-btn" onclick="submitBulk()" style="display:none">
+        Queue All Applications
+      </button>
+      <button class="btn btn-secondary" id="clear-btn" onclick="clearList()" style="display:none">
+        Clear
+      </button>
+    </div>
+    <div id="bulk-status" class="status"></div>
+  </div>
+</div>
+
+<script>
+let parsedUrls = [];
+
+function showStatus(id, type, msg) {
+  const el = document.getElementById(id);
+  el.className = 'status ' + type;
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+async function submitSingle() {
+  const url = document.getElementById('job-url').value.trim();
+  if (!url) return showStatus('single-status', 'error', 'Please enter a job URL.');
+  if (!url.startsWith('http')) return showStatus('single-status', 'error', 'Invalid URL — must start with http.');
+  showStatus('single-status', 'loading', 'Queuing application...');
+  try {
+    const res = await fetch('/api/jobs/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url, mode: 'single' })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      showStatus('single-status', 'success', '✅ Job queued! Check #hiring-bot in Slack for progress.');
+      document.getElementById('job-url').value = '';
+    } else {
+      showStatus('single-status', 'error', data.error || 'Failed to queue job.');
+    }
+  } catch (err) {
+    showStatus('single-status', 'error', 'Network error: ' + err.message);
+  }
+}
+
+document.getElementById('job-url').addEventListener('keydown', e => { if (e.key === 'Enter') submitSingle(); });
+
+function parseCSV(text) {
+  return text.split('\n').map(l => l.trim().replace(/['"]/g, '')).filter(l => l.startsWith('http'));
+}
+
+function renderList() {
+  const list = document.getElementById('job-list');
+  const count = document.getElementById('job-count');
+  list.innerHTML = parsedUrls.map((u, i) =>
+    `<div class="job-item"><span title="${u}">${u}</span><button onclick="removeUrl(${i})">✕</button></div>`
+  ).join('');
+  count.textContent = `${parsedUrls.length} URL${parsedUrls.length !== 1 ? 's' : ''} loaded`;
+  count.style.display = parsedUrls.length ? 'block' : 'none';
+  document.getElementById('bulk-submit-btn').style.display = parsedUrls.length ? 'inline-flex' : 'none';
+  document.getElementById('clear-btn').style.display = parsedUrls.length ? 'inline-flex' : 'none';
+}
+
+function removeUrl(i) {
+  parsedUrls.splice(i, 1);
+  renderList();
+}
+
+function clearList() {
+  parsedUrls = [];
+  renderList();
+  document.getElementById('bulk-status').style.display = 'none';
+}
+
+document.getElementById('file-input').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => { parsedUrls = parseCSV(ev.target.result); renderList(); };
+  reader.readAsText(file);
+  e.target.value = '';
+});
+
+const dz = document.getElementById('drop-zone');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
+dz.addEventListener('drop', e => {
+  e.preventDefault(); dz.classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => { parsedUrls = parseCSV(ev.target.result); renderList(); };
+  reader.readAsText(file);
+});
+
+async function submitBulk() {
+  if (!parsedUrls.length) return;
+  showStatus('bulk-status', 'loading', `Queuing ${parsedUrls.length} applications... this may take a moment.`);
+  try {
+    const res = await fetch('/api/jobs/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ urls: parsedUrls, mode: 'bulk' })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      showStatus('bulk-status', 'success', `✅ Queued ${data.queued} applications. ${data.skipped} skipped. Check #hiring-bot for progress.`);
+      clearList();
+    } else {
+      showStatus('bulk-status', 'error', data.error || 'Failed to queue jobs.');
+    }
+  } catch (err) {
+    showStatus('bulk-status', 'error', 'Network error: ' + err.message);
+  }
+}
+</script>
+</body>
+</html>
