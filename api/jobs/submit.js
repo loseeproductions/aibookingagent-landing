@@ -1,22 +1,31 @@
 /**
  * /api/jobs/submit
- * Accepts a single job URL or bulk array of URLs.
- * Deduplicates, rate-limits, and forwards to n8n orchestrator.
+ * Accepts single URL or bulk CSV array, forwards to n8n.
+ * Notifies #hiring-bot Slack channel.
  */
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const { url, urls, mode = 'single' } = req.body;
   const N8N = process.env.N8N_JOB_WEBHOOK;
-  const SLACK = process.env.HIRING_BOT_SLACK_WEBHOOK;
+  const SLACK = process.env.HIRING_BOT_SLACK;
 
   const notify = async (text) => {
-    await fetch(SLACK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) }).catch(() => {});
+    if (!SLACK) return;
+    await fetch(SLACK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text })
+    }).catch(() => {});
   };
 
   if (mode === 'single' && url) {
     if (!url.startsWith('http')) return res.status(400).json({ error: 'Invalid URL' });
-    await fetch(N8N, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url, mode: 'single' }) });
+    await fetch(N8N, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url, mode: 'single' })
+    });
     await notify(`🎯 *Hiring Bot — Job Queued*\n${url}`);
     return res.status(200).json({ queued: 1, url });
   }
@@ -29,14 +38,18 @@ export default async function handler(req, res) {
 
     for (const jobUrl of valid) {
       try {
-        await fetch(N8N, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url: jobUrl, mode: 'bulk' }) });
+        await fetch(N8N, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: jobUrl, mode: 'bulk' })
+        });
         queued++;
-        await new Promise(r => setTimeout(r, 2000)); // 2s rate limit between jobs
+        await new Promise(r => setTimeout(r, 2000));
       } catch (err) {
         errors.push({ url: jobUrl, error: err.message });
       }
     }
-    await notify(`🗂️ *Hiring Bot — Bulk Upload Complete*\nQueued: ${queued} | Skipped/dupes: ${skipped} | Errors: ${errors.length}`);
+    await notify(`🗂️ *Hiring Bot — Bulk Upload Complete*\nQueued: ${queued} | Skipped: ${skipped} | Errors: ${errors.length}`);
     return res.status(200).json({ queued, skipped, errors });
   }
 
