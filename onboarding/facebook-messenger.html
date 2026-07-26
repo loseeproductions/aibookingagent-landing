@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connect Facebook Messenger — AI Booking Agent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0B0C12;--panel:#12141E;--ink:#EDEFF7;--muted:#C9CDDB;--faint:#9AA0B4;--indigo:#7C86FF;--indigo2:#8F98FF;--indigo3:#B9BFFF;--mint:#5CE6B8;--line:rgba(255,255,255,.08);--glass:rgba(255,255,255,.035);--glass2:rgba(255,255,255,.06);--sans:'Space Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;--grad:linear-gradient(110deg,#8F98FF,#7C86FF 45%,#5CE6B8);--grad-indigo:linear-gradient(140deg,#8F98FF,#7C86FF);}
+  *{box-sizing:border-box;} html{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  body{margin:0;font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.62;font-size:16px;position:relative;overflow-x:hidden;}
+  .glow{position:fixed;z-index:0;pointer-events:none;border-radius:50%;filter:blur(90px);}
+  .glow.g1{width:640px;height:520px;top:-240px;left:50%;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(124,134,255,.26),transparent 72%);animation:pulseGlow 6s ease-in-out infinite;}
+  .glow.g2{width:420px;height:420px;bottom:-160px;right:-120px;background:radial-gradient(closest-side,rgba(92,230,184,.13),transparent 70%);animation:floaty 9s ease-in-out infinite;}
+  @keyframes pulseGlow{0%,100%{opacity:.7}50%{opacity:1}} @keyframes floaty{0%,100%{transform:translate(0,0)}50%{transform:translate(-24px,20px)}}
+  @keyframes dotBlink{0%,80%,100%{opacity:.25}40%{opacity:1}} @media (prefers-reduced-motion:reduce){.glow{animation:none!important;}}
+  .wrap{max-width:820px;margin:0 auto;padding:0 22px 72px;position:relative;z-index:1;}
+  header.masthead{padding:36px 0 4px;} .brandrow{display:flex;align-items:center;gap:13px;margin-bottom:30px;}
+  .logo{width:42px;height:42px;border-radius:12px;background:var(--grad-indigo);display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 8px 24px rgba(124,134,255,.42);position:relative;}
+  .logo .dots{display:flex;gap:4px;} .logo .dot{width:5.5px;height:5.5px;border-radius:50%;background:#0B0C12;animation:dotBlink 1.2s infinite;} .logo .dot:nth-child(2){animation-delay:.15s;} .logo .dot:nth-child(3){animation-delay:.3s;}
+  .logo .badge{position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;border-radius:50%;background:var(--mint);border:2.5px solid var(--bg);}
+  .brandname{font-weight:600;font-size:15px;} .brandname small{display:block;color:var(--faint);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-top:3px;font-weight:500;}
+  .eyebrow{color:var(--mint);font-weight:600;font-size:12px;letter-spacing:3px;text-transform:uppercase;margin:0 0 14px;}
+  h1{font-size:38px;line-height:1.12;margin:0 0 16px;letter-spacing:-1px;font-weight:700;} h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .lede{color:var(--muted);font-size:17.5px;max-width:640px;margin:0;}
+  .platformpill{display:inline-flex;align-items:center;gap:8px;background:var(--glass2);border:1px solid var(--line);color:var(--ink);padding:7px 14px;border-radius:999px;font-weight:500;font-size:12.5px;letter-spacing:.4px;margin-top:22px;}
+  .toolbar{position:sticky;top:0;z-index:20;background:rgba(11,12,18,.72);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);} .toolbar .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:12px;padding-bottom:12px;} .toolbar .t-label{font-size:13px;color:var(--faint);} .toolbar .t-label b{color:var(--ink);}
+  .btn{appearance:none;border:none;cursor:pointer;background:var(--grad-indigo);color:#0B0C12;font-weight:600;font-size:14px;padding:11px 18px;border-radius:11px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;box-shadow:0 6px 20px rgba(124,134,255,.35);} .btn:hover{filter:brightness(1.06);} .btn svg{width:16px;height:16px;}
+  .meta{display:flex;gap:20px;flex-wrap:wrap;margin:28px 0 4px;color:var(--faint);font-size:14px;} .meta b{color:var(--ink);}
+  section.block{margin-top:32px;} h2{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--indigo3);margin:0 0 16px;font-weight:600;}
+  .why{background:var(--glass);border:1px solid var(--line);border-left:3px solid var(--mint);border-radius:16px;padding:20px 22px;backdrop-filter:blur(6px);} .why p{margin:0;color:var(--muted);} .why p + p{margin-top:10px;} .why strong{color:var(--ink);font-weight:600;}
+  .step{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 22px 20px 20px;margin-bottom:14px;display:flex;gap:17px;break-inside:avoid;}
+  .num{flex:none;width:36px;height:36px;border-radius:50%;background:var(--glass2);border:1px solid var(--line);color:var(--indigo3);font-weight:600;display:flex;align-items:center;justify-content:center;font-size:15px;margin-top:2px;}
+  .step.key{border-color:rgba(92,230,184,.4);background:linear-gradient(180deg,rgba(92,230,184,.06),var(--panel));} .step.key .num{background:var(--grad);color:#0B1020;border:none;font-weight:700;}
+  .step-body{flex:1;min-width:0;} .step-body h3{margin:0 0 7px;font-size:18.5px;letter-spacing:-.2px;font-weight:600;} .step-body p{margin:0 0 8px;color:var(--muted);} .step-body p:last-child{margin-bottom:0;} .step-body b,.step-body strong{color:var(--ink);font-weight:600;}
+  .click{display:inline-block;background:rgba(124,134,255,.16);border:1px solid rgba(124,134,255,.32);border-radius:6px;padding:0 7px;font-weight:500;color:var(--indigo3);font-size:13.5px;white-space:nowrap;}
+  .call{border-radius:12px;padding:13px 16px;margin:12px 0 2px;font-size:14.5px;display:flex;gap:11px;break-inside:avoid;} .call .ic{flex:none;font-size:17px;line-height:1.35;}
+  .call.info{background:rgba(124,134,255,.1);border:1px solid rgba(124,134,255,.3);color:#d7dbff;} .call.safe{background:rgba(92,230,184,.1);border:1px solid rgba(92,230,184,.32);color:#bff3df;} .call.warn{background:rgba(255,176,32,.08);border:1px solid rgba(255,176,32,.34);color:#ffdca5;} .call b{font-weight:700;color:#fff;}
+  .sendus{background:linear-gradient(150deg,rgba(124,134,255,.15),rgba(92,230,184,.06));border:1px solid rgba(92,230,184,.3);border-radius:18px;padding:26px 26px 22px;margin-top:36px;break-inside:avoid;backdrop-filter:blur(8px);} .sendus h2{color:var(--mint);}
+  .sendus ul{list-style:none;margin:6px 0 0;padding:0;} .sendus li{display:flex;gap:13px;padding:10px 0;border-top:1px solid var(--line);align-items:flex-start;} .sendus li:first-child{border-top:none;} .box{flex:none;width:20px;height:20px;border:2px solid var(--mint);border-radius:5px;margin-top:2px;} .sendus li span{color:var(--muted);} .sendus li span b{color:#fff;font-weight:600;}
+  .contact{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:14px;color:var(--faint);} .contact b{color:var(--ink);}
+  footer{margin-top:32px;color:var(--faint);font-size:12.5px;text-align:center;letter-spacing:.3px;} footer a{color:var(--indigo);text-decoration:none;font-weight:600;} footer a:hover{text-decoration:underline;}
+  @media print{
+    .glow{display:none!important;} body{background:#fff;color:#1c2433;font-size:12pt;} .toolbar{display:none!important;}
+    header.masthead{padding:0 0 14px;border-bottom:3px solid var(--indigo);} .logo{box-shadow:none;} .logo .dot{background:#fff;} .brandname,.brandname small{color:#1c2433;} .brandname small{color:#5a6577;}
+    .eyebrow{color:#3b3f8f;} h1{font-size:24pt;color:#141633;} h1 .g{-webkit-text-fill-color:#5A63E0;color:#5A63E0;} .lede{color:#333;} .platformpill{background:#eef0fb;border:1px solid #e3e6f5;color:#141633;}
+    .why,.step,.call,.sendus{background:#fff!important;border:1px solid #e3e6f5!important;box-shadow:none;backdrop-filter:none;} .why{border-left:3px solid #17b58a!important;}
+    .why p,.step-body p,.sendus li span{color:#5a6577;} .why strong,.step-body b,.step-body strong,.sendus li span b{color:#1c2433;}
+    .num{background:#5A63E0;color:#fff;border:none;} .step.key .num{background:#17b58a;color:#fff;} .click{background:#eef0fb;border:1px solid #e3e6f5;color:#3b3f8f;}
+    .call.info{background:#eef0fb;color:#2a2f6b;border:1px solid #dce0f6;} .call.safe{background:#e7f8f1;color:#125a44;border:1px solid #c4ecdd;} .call.warn{background:#fff6e8;color:#8a5a12;border:1px solid #f3ddb4;} .call b{color:#111;}
+    .sendus h2{color:#17b58a;} .box{border-color:#17b58a;} .contact{color:#5a6577;} .contact b{color:#1c2433;} footer{color:#5a6577;} @page{margin:14mm;}
+  }
+</style>
+</head>
+<body>
+<div class="glow g1"></div><div class="glow g2"></div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="brandrow"><div class="logo"><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><span class="badge"></span></div><div class="brandname">AI Booking Agent<small>Client Setup</small></div></div>
+    <p class="eyebrow">Connect Your Channels</p>
+    <h1>Connect <span class="g">Facebook Messenger</span></h1>
+    <p class="lede">Plenty of customers message businesses on Facebook instead of calling. This quick guide lets your agent answer those Messenger chats 24/7 and book them — you just add us to your Page.</p>
+    <span class="platformpill">📨 Facebook · Messenger</span>
+  </div>
+</header>
+
+<div class="toolbar"><div class="wrap">
+  <span class="t-label">Tip: use <b>Print → Save as PDF</b> to keep or share this guide.</span>
+  <button class="btn" onclick="window.print()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>Print / Save PDF</button>
+</div></div>
+
+<div class="wrap">
+  <div class="meta"><span>⏱️ <b>About 5 minutes</b></span><span>📄 <b>Have ready:</b> the Facebook account that manages your Page</span></div>
+
+  <section class="block">
+    <h2>Why we need this</h2>
+    <div class="why">
+      <p><strong>Facebook messages are hot leads.</strong> Someone asking "are you open Saturday?" on Messenger is ready to book — but usually waits hours for a reply. Your agent answers instantly and books them on the spot.</p>
+      <p>Facebook requires a <strong>Page admin to grant access</strong>, so you'll add us to your Page. <strong>We only manage messages — you stay the Page owner, and you never share your password.</strong></p>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Step-by-step</h2>
+
+    <div class="step"><div class="num">1</div><div class="step-body">
+      <h3>Make sure you have a Facebook Page</h3>
+      <p>This needs to be a <b>Facebook Business Page</b> (not just your personal profile). If you don't have one yet, create it at <b>facebook.com/pages/create</b> — takes a couple minutes.</p>
+    </div></div>
+
+    <div class="step"><div class="num">2</div><div class="step-body">
+      <h3>Open your Page's access settings</h3>
+      <p>Go to <b>business.facebook.com</b> (Meta Business Suite) → <span class="click">Settings</span>. Then open <span class="click">People</span> (or, from the Page directly: <span class="click">Settings</span> → <span class="click">Page access</span>).</p>
+      <div class="call info"><span class="ic">💡</span><span>Facebook moves these menus around often. If you can't find it, send us a screenshot and we'll point to the exact button — or we'll screen-share.</span></div>
+    </div></div>
+
+    <div class="step key"><div class="num">3</div><div class="step-body">
+      <h3>Add us to your Page</h3>
+      <p>Click <span class="click">Add People</span>, enter our email, and give a role that can <b>manage messages</b> (Facebook calls this "Full control" or "Admin"):</p>
+      <div class="call info"><span class="ic">📧</span><span>Add <b>tim@aibookingagent.co</b> · Access: <b>Full control / Admin</b></span></div>
+      <p>Confirm, and we'll accept the invite on our end.</p>
+      <div class="call safe"><span class="ic">✅</span><span>You remain the Page owner. We only use this to let the agent read and reply to Messenger — you can remove us anytime.</span></div>
+    </div></div>
+  </section>
+
+  <div class="sendus">
+    <h2>✔ What to send us when you're done</h2>
+    <ul>
+      <li><span class="box"></span><span>Confirmation you <b>added tim@aibookingagent.co</b> to your Page.</span></li>
+      <li><span class="box"></span><span>Your <b>Facebook Page name</b> or link.</span></li>
+      <li><span class="box"></span><span>Anything you got stuck on — Facebook's menus are the trickiest, so just ask.</span></li>
+    </ul>
+    <div class="contact">Questions? Email <b>tim@aibookingagent.co</b> — this is the one people ask about most, so don't hesitate.</div>
+  </div>
+
+  <footer><a href="index.html">View all Setup Guides</a> · AI Booking Agent · Never miss a lead again</footer>
+</div>
+</body>
+</html>

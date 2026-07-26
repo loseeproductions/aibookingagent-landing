@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Client Onboarding — AI Booking Agent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0C12; --panel:#12141E; --ink:#EDEFF7; --muted:#C9CDDB; --faint:#9AA0B4;
+    --indigo:#7C86FF; --indigo2:#8F98FF; --indigo3:#B9BFFF; --mint:#5CE6B8;
+    --line:rgba(255,255,255,.08); --glass:rgba(255,255,255,.035); --glass2:rgba(255,255,255,.06);
+    --sans:'Space Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --grad:linear-gradient(110deg,#8F98FF,#7C86FF 45%,#5CE6B8);
+    --grad-indigo:linear-gradient(140deg,#8F98FF,#7C86FF);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.62;font-size:16px;position:relative;overflow-x:hidden;}
+  /* ambient glows */
+  .glow{position:fixed;z-index:0;pointer-events:none;border-radius:50%;filter:blur(90px);}
+  .glow.g1{width:640px;height:520px;top:-220px;left:50%;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(124,134,255,.28),transparent 72%);animation:pulseGlow 6s ease-in-out infinite;}
+  .glow.g2{width:420px;height:420px;bottom:-160px;right:-120px;background:radial-gradient(closest-side,rgba(92,230,184,.14),transparent 70%);animation:floaty 9s ease-in-out infinite;}
+  @keyframes pulseGlow{0%,100%{opacity:.75}50%{opacity:1}}
+  @keyframes floaty{0%,100%{transform:translate(0,0)}50%{transform:translate(-26px,22px)}}
+  @keyframes dotBlink{0%,80%,100%{opacity:.25}40%{opacity:1}}
+  @media (prefers-reduced-motion:reduce){.glow,.dot{animation:none!important;}}
+
+  .wrap{max-width:880px;margin:0 auto;padding:44px 22px 74px;position:relative;z-index:1;}
+  .brandrow{display:flex;align-items:center;gap:13px;margin-bottom:38px;}
+  .logo{width:44px;height:44px;border-radius:13px;background:var(--grad-indigo);display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 8px 26px rgba(124,134,255,.45);position:relative;}
+  .logo .dots{display:flex;gap:4px;}
+  .logo .dot{width:6px;height:6px;border-radius:50%;background:#0B0C12;animation:dotBlink 1.2s infinite;}
+  .logo .dot:nth-child(2){animation-delay:.15s;} .logo .dot:nth-child(3){animation-delay:.3s;}
+  .logo .badge{position:absolute;right:-3px;bottom:-3px;width:12px;height:12px;border-radius:50%;background:var(--mint);border:2.5px solid var(--bg);}
+  .brandname{font-weight:600;font-size:15.5px;}
+  .brandname small{display:block;color:var(--faint);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-top:3px;font-weight:500;}
+  .eyebrow{color:var(--mint);font-weight:600;font-size:12px;letter-spacing:3px;text-transform:uppercase;margin:0 0 14px;}
+  h1{font-size:44px;line-height:1.1;margin:0 0 18px;letter-spacing:-1.2px;font-weight:700;}
+  h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .lede{color:var(--muted);font-size:18px;max-width:680px;margin:0;}
+
+  .promise{margin-top:30px;background:var(--glass);border:1px solid var(--line);border-left:3px solid var(--mint);border-radius:16px;padding:18px 22px;backdrop-filter:blur(6px);}
+  .promise p{margin:0;color:var(--muted);font-size:15px;} .promise strong{color:var(--ink);}
+
+  .sect{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--indigo3);margin:42px 0 16px;font-weight:600;}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  @media (max-width:640px){.grid{grid-template-columns:1fr;} h1{font-size:34px;}}
+  .card{display:flex;flex-direction:column;text-decoration:none;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px 22px 20px;transition:transform .15s,border-color .15s,background .15s;color:inherit;}
+  .card:hover{transform:translateY(-3px);border-color:rgba(124,134,255,.5);background:#161826;}
+  .card .ic{width:48px;height:48px;border-radius:13px;background:var(--glass2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:23px;margin-bottom:16px;}
+  .card .k{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--faint);margin-bottom:6px;font-weight:600;}
+  .card h3{margin:0 0 7px;font-size:20px;font-weight:600;letter-spacing:-.3px;}
+  .card p{margin:0 0 18px;color:var(--muted);font-size:14.5px;line-height:1.5;flex:1;}
+  .card .row{display:flex;align-items:center;width:100%;}
+  .card .go{display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:14px;color:var(--mint);}
+  .card .go .time{margin-left:auto;font-weight:500;font-size:12px;color:var(--faint);}
+  .arrow{transition:transform .15s;} .card:hover .arrow{transform:translateX(4px);}
+  .card.feature{border-color:rgba(92,230,184,.32);background:linear-gradient(180deg,rgba(92,230,184,.06),var(--panel));}
+  .card.feature .ic{background:rgba(92,230,184,.12);border-color:rgba(92,230,184,.3);}
+
+  .help{margin-top:34px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:linear-gradient(150deg,rgba(124,134,255,.16),rgba(92,230,184,.06));border:1px solid rgba(124,134,255,.3);border-radius:18px;padding:20px 24px;backdrop-filter:blur(8px);}
+  .help .t{font-size:15px;color:var(--muted);} .help .t b{color:var(--ink);}
+  .help a{text-decoration:none;background:var(--grad-indigo);color:#0B0C12;font-weight:600;font-size:14px;padding:11px 18px;border-radius:11px;box-shadow:0 6px 20px rgba(124,134,255,.35);white-space:nowrap;}
+
+  footer{margin-top:38px;color:var(--faint);font-size:12.5px;text-align:center;letter-spacing:.3px;}
+</style>
+</head>
+<body>
+<div class="glow g1"></div><div class="glow g2"></div>
+
+<div class="wrap">
+  <div class="brandrow">
+    <div class="logo"><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><span class="badge"></span></div>
+    <div class="brandname">AI Booking Agent<small>Client Setup</small></div>
+  </div>
+
+  <p class="eyebrow">Welcome Aboard</p>
+  <h1>Let's get your <span class="g">AI agent</span> live</h1>
+  <p class="lede">Your AI receptionist answers every lead in under a minute, qualifies them, and books them straight onto your calendar. To make that happen, we just need to connect a few of your channels and learn about your business. These short guides walk you through each one.</p>
+
+  <div class="promise">
+    <p><strong>How it works:</strong> you connect your existing tools and add us as a helper — then we handle the technical setup and go live in about 48 hours. <strong>You'll never need to share a password with us.</strong></p>
+  </div>
+
+  <p class="sect">Connect your channels</p>
+  <div class="grid">
+    <a class="card" href="calendly.html">
+      <div class="ic">📅</div><div class="k">Scheduling</div>
+      <h3>Calendly</h3>
+      <p>Connect your calendar so the agent can book real appointments onto your schedule.</p>
+      <div class="row"><span class="go">Open guide <span class="arrow">→</span></span><span class="time">~10 min</span></div>
+    </a>
+    <a class="card" href="website-widget.html">
+      <div class="ic">💬</div><div class="k">Your Website</div>
+      <h3>Website Chat Widget</h3>
+      <p>Add the agent to your site — paste a snippet yourself, or let us install it for you.</p>
+      <div class="row"><span class="go">Open guide <span class="arrow">→</span></span><span class="time">~10 min</span></div>
+    </a>
+    <a class="card" href="facebook-messenger.html">
+      <div class="ic">📨</div><div class="k">Social</div>
+      <h3>Facebook Messenger</h3>
+      <p>Let the agent answer Messenger inquiries — just add us to your Facebook Page.</p>
+      <div class="row"><span class="go">Open guide <span class="arrow">→</span></span><span class="time">~5 min</span></div>
+    </a>
+    <a class="card" href="google-business-profile.html">
+      <div class="ic">📍</div><div class="k">Local Search</div>
+      <h3>Google Business Profile</h3>
+      <p>Capture leads from Google Search &amp; Maps — add us as a Manager on your listing.</p>
+      <div class="row"><span class="go">Open guide <span class="arrow">→</span></span><span class="time">~10 min</span></div>
+    </a>
+  </div>
+
+  <p class="sect">Teach your agent</p>
+  <div class="grid">
+    <a class="card feature" href="train-your-agent.html" style="grid-column:1 / -1">
+      <div class="ic">🧠</div><div class="k">The Important One</div>
+      <h3>Train Your Agent</h3>
+      <p>Tell us about your services, pricing, hours, FAQs, and how you like to talk to customers — this is what makes your agent sound like your best receptionist. Includes a fillable form you download and send back.</p>
+      <div class="row"><span class="go">Open guide &amp; form <span class="arrow">→</span></span><span class="time">~15 min</span></div>
+    </a>
+  </div>
+
+  <div class="help">
+    <div class="t"><b>Not sure where to start?</b> We're happy to hop on a quick call and set things up together.</div>
+    <a href="mailto:tim@aibookingagent.co">Email us</a>
+  </div>
+
+  <footer>AI Booking Agent · Never miss a lead again</footer>
+</div>
+</body>
+</html>
